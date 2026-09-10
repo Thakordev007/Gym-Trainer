@@ -26,7 +26,11 @@ SECRET_KEY = 'django-insecure-feakb0s%0yph@&z7qn@($_ec&58i%wj^^ityv_q$gg7$iz%k#s
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "gym-trainer-dqtx.onrender.com",
+    "localhost",
+    "127.0.0.1",
+]
 
 
 # Application definition
