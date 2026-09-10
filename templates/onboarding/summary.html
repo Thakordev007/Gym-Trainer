@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Your Fitness Plan — FitAI{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/onboarding.css' %}">{% endblock %}
+
+{% block content %}
+<main id="main-content" class="onboarding-page">
+  <header class="onboarding-header">
+    <a href="/" class="brand"><span class="brand__mark"><i class="bi bi-lightning-charge-fill"></i></span><span class="brand__name">FitAI</span></a>
+  </header>
+
+  <div class="wizard">
+    <ol class="wizard__steps" aria-label="Onboarding progress">
+      <li class="is-done"><span><i class="bi bi-check-lg"></i></span>Goal</li>
+      <li class="is-done"><span><i class="bi bi-check-lg"></i></span>Body Details</li>
+      <li class="is-done"><span><i class="bi bi-check-lg"></i></span>Preferences</li>
+      <li class="is-done"><span><i class="bi bi-check-lg"></i></span>Equipment</li>
+      <li class="is-active"><span>5</span>Summary</li>
+    </ol>
+    <div class="progress-bar" style="margin-top:14px;"><span style="width:100%"></span></div>
+
+    <div class="wizard__panel">
+      <span class="eyebrow">STEP 5 OF 5</span>
+      <h1>Your Fitness Profile</h1>
+      <p class="muted">Here's everything FitAI will use to build your plan.</p>
+
+      <div class="summary-grid" id="summaryGrid">
+        {% for item in summary_items %}
+        <div class="summary-item"><span>{{ item.label }}</span><strong>{{ item.value }}</strong></div>
+        {% endfor %}
+        {% if equipment %}
+        <div class="summary-item summary-item--full"><span>Equipment</span><strong>{{ equipment|join:", " }}</strong></div>
+        {% endif %}
+      </div>
+
+      <div class="wizard__nav">
+        <a href="/onboarding/equipment/" class="btn btn-outline"><i class="bi bi-arrow-left"></i> Back</a>
+        <button type="button" class="btn btn-primary" id="generatePlanBtn">
+          <i class="bi bi-stars"></i> Generate My Fitness Plan
+        </button>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/onboarding.js' %}"></script>{% endblock %}

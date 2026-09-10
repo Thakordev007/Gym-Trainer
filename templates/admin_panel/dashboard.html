@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Admin Dashboard — FitAI{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/dashboard.css' %}"><link rel="stylesheet" href="{% static 'css/admin.css' %}">{% endblock %}
+
+{% block content %}
+<div class="app-shell">
+  {% include "components/admin_sidebar.html" with active="dashboard" %}
+  <main class="main-content" id="main-content">
+    <div class="topbar">
+      <button class="topbar__menu" id="sidebarToggle" aria-label="Open menu"><i class="bi bi-list"></i></button>
+      <div class="topbar__greeting"><h1>Admin Dashboard</h1><p class="muted">Platform overview.</p></div>
+      <div class="topbar__actions"><a href="/admin-panel/settings/" class="avatar">{{ request.user.username|first|upper }}</a></div>
+    </div>
+
+    <div class="stat-grid stat-grid--6">
+      {% include "components/stat_card.html" with icon="bi-people-fill" label="Total Users" value=total_users unit="" tone="violet" %}
+      {% include "components/stat_card.html" with icon="bi-person-check-fill" label="Active Users" value=active_users unit="" tone="lime" %}
+      {% include "components/stat_card.html" with icon="bi-person-plus-fill" label="New Users" value=new_users unit="this wk" tone="amber" %}
+      {% include "components/stat_card.html" with icon="bi-check2-circle" label="Completed Workouts" value=completed_workouts unit="" tone="lime" %}
+      {% include "components/stat_card.html" with icon="bi-stars" label="AI Requests" value=ai_requests unit="" tone="violet" %}
+      {% include "components/stat_card.html" with icon="bi-calendar2-check" label="Active Plans" value=active_plans unit="" tone="amber" %}
+    </div>
+
+    <div class="admin-grid">
+      <section class="card card-pad">
+        <div class="section-head"><h2>User Growth</h2></div>
+        <svg id="adminGrowthChart" viewBox="0 0 600 220" class="chart-svg" role="img" aria-label="User growth trend"></svg>
+      </section>
+      <section class="card card-pad">
+        <div class="section-head"><h2>Recent Signups</h2></div>
+        <ul class="mini-schedule">
+          {% for u in recent_signups %}
+          <li><span>{{ u.username|slice:":2"|upper }}</span> {{ u.get_full_name|default:u.username }} <a href="/admin-panel/users/{{ u.id }}/"><i class="bi bi-arrow-up-right"></i></a></li>
+          {% empty %}
+          <li><span>—</span> No signups yet</li>
+          {% endfor %}
+        </ul>
+      </section>
+    </div>
+  </main>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>window.ADMIN_GROWTH_DATA = {{ growth_data_json|safe }};</script>
+<script src="{% static 'js/dashboard.js' %}"></script>
+<script src="{% static 'js/admin.js' %}"></script>
+{% endblock %}

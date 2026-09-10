@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Equipment — FitAI{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/onboarding.css' %}">{% endblock %}
+
+{% block content %}
+<main id="main-content" class="onboarding-page">
+  <header class="onboarding-header">
+    <a href="/" class="brand"><span class="brand__mark"><i class="bi bi-lightning-charge-fill"></i></span><span class="brand__name">FitAI</span></a>
+    <a href="/dashboard/" class="muted skip-onboarding">Skip for now</a>
+  </header>
+
+  <div class="wizard">
+    <ol class="wizard__steps" aria-label="Onboarding progress">
+      <li class="is-done"><span><i class="bi bi-check-lg"></i></span>Goal</li>
+      <li class="is-done"><span><i class="bi bi-check-lg"></i></span>Body Details</li>
+      <li class="is-done"><span><i class="bi bi-check-lg"></i></span>Preferences</li>
+      <li class="is-active"><span>4</span>Equipment</li>
+      <li><span>5</span>Summary</li>
+    </ol>
+    <div class="progress-bar" style="margin-top:14px;"><span style="width:80%"></span></div>
+
+    <div class="wizard__panel">
+      <span class="eyebrow">STEP 4 OF 5</span>
+      <h1>What equipment do you have access to?</h1>
+      <p class="muted">Select everything available — FitAI builds exercises only around these.</p>
+
+      <div id="gymEquipmentSection" hidden>
+        <h3 class="equipment-section-title"><i class="bi bi-building"></i> Gym Equipment</h3>
+        <div class="equip-grid">
+          <label class="equip-card"><input type="checkbox" value="Treadmill"><i class="bi bi-speedometer2"></i><span>Treadmill</span></label>
+          <label class="equip-card"><input type="checkbox" value="Bench Press"><i class="bi bi-minecart"></i><span>Bench Press</span></label>
+          <label class="equip-card"><input type="checkbox" value="Squat Rack"><i class="bi bi-columns-gap"></i><span>Squat Rack</span></label>
+          <label class="equip-card"><input type="checkbox" value="Cable Machine"><i class="bi bi-diagram-2"></i><span>Cable Machine</span></label>
+          <label class="equip-card"><input type="checkbox" value="Dumbbells"><i class="bi bi-dumbbell"></i><span>Dumbbells</span></label>
+          <label class="equip-card"><input type="checkbox" value="Barbells"><i class="bi bi-dash-lg"></i><span>Barbells</span></label>
+          <label class="equip-card"><input type="checkbox" value="Smith Machine"><i class="bi bi-grid-3x3"></i><span>Smith Machine</span></label>
+          <label class="equip-card"><input type="checkbox" value="Leg Press"><i class="bi bi-arrow-down-square"></i><span>Leg Press</span></label>
+          <label class="equip-card"><input type="checkbox" value="Lat Pulldown"><i class="bi bi-arrow-down"></i><span>Lat Pulldown</span></label>
+          <label class="equip-card"><input type="checkbox" value="Row Machine"><i class="bi bi-arrow-left-right"></i><span>Row Machine</span></label>
+          <label class="equip-card"><input type="checkbox" value="Exercise Bike"><i class="bi bi-bicycle"></i><span>Exercise Bike</span></label>
+          <label class="equip-card"><input type="checkbox" value="Other"><i class="bi bi-three-dots"></i><span>Other</span></label>
+        </div>
+      </div>
+
+      <div id="homeEquipmentSection" hidden style="margin-top:24px;">
+        <h3 class="equipment-section-title"><i class="bi bi-house-door"></i> Home Equipment</h3>
+        <div class="equip-grid">
+          <label class="equip-card"><input type="checkbox" value="No Equipment"><i class="bi bi-slash-circle"></i><span>No Equipment</span></label>
+          <label class="equip-card"><input type="checkbox" value="Dumbbells"><i class="bi bi-dumbbell"></i><span>Dumbbells</span></label>
+          <label class="equip-card"><input type="checkbox" value="Barbell"><i class="bi bi-dash-lg"></i><span>Barbell</span></label>
+          <label class="equip-card"><input type="checkbox" value="Resistance Bands"><i class="bi bi-magnet"></i><span>Resistance Bands</span></label>
+          <label class="equip-card"><input type="checkbox" value="Pull-up Bar"><i class="bi bi-align-top"></i><span>Pull-up Bar</span></label>
+          <label class="equip-card"><input type="checkbox" value="Kettlebell"><i class="bi bi-droplet"></i><span>Kettlebell</span></label>
+          <label class="equip-card"><input type="checkbox" value="Bench"><i class="bi bi-minecart"></i><span>Bench</span></label>
+          <label class="equip-card"><input type="checkbox" value="Yoga Mat"><i class="bi bi-square"></i><span>Yoga Mat</span></label>
+          <label class="equip-card"><input type="checkbox" value="Treadmill"><i class="bi bi-speedometer2"></i><span>Treadmill</span></label>
+          <label class="equip-card"><input type="checkbox" value="Exercise Bike"><i class="bi bi-bicycle"></i><span>Exercise Bike</span></label>
+          <label class="equip-card"><input type="checkbox" value="Other"><i class="bi bi-three-dots"></i><span>Other</span></label>
+        </div>
+      </div>
+      <span class="field-error" id="equipError" role="alert"></span>
+
+      <div class="wizard__nav">
+        <a href="/onboarding/workout-preferences/" class="btn btn-outline"><i class="bi bi-arrow-left"></i> Back</a>
+        <button type="button" class="btn btn-primary" id="equipNextBtn">Continue <i class="bi bi-arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/onboarding.js' %}"></script>{% endblock %}

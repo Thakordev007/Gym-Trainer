@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Admin Login — FitAI{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block content %}
+<main id="main-content" class="auth-page auth-page--single admin-login">
+  <div class="auth-form-wrap">
+    <div class="auth-form">
+      <div class="brand" style="justify-content:center;margin-bottom:24px;"><span class="brand__mark"><i class="bi bi-lightning-charge-fill"></i></span><span class="brand__name">FitAI <span class="mono" style="font-size:12px;color:var(--lime);">ADMIN</span></span></div>
+      <h1 class="text-center">Admin Sign In</h1>
+      <p class="muted text-center">Restricted access — authorized staff only.</p>
+
+      <form id="adminLoginForm" novalidate>
+        <div class="field">
+          <label for="adminUser">Admin Username</label>
+          <input class="input" type="text" id="adminUser" name="adminUser" autocomplete="username" required>
+        </div>
+        <div class="field">
+          <label for="adminPassword">Password</label>
+          <div class="input-group">
+            <input class="input" type="password" id="adminPassword" name="adminPassword" autocomplete="current-password" required>
+            <button type="button" class="toggle-visibility" data-toggle-for="adminPassword" aria-label="Show password"><i class="bi bi-eye"></i></button>
+          </div>
+          <span class="field-error" id="adminPasswordError" role="alert"></span>
+        </div>
+        <button type="submit" class="btn btn-dark btn-block">Sign In</button>
+      </form>
+    </div>
+  </div>
+</main>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/auth.js' %}"></script><script src="{% static 'js/admin.js' %}"></script>{% endblock %}

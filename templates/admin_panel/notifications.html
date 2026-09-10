@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Notifications — FitAI Admin{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/dashboard.css' %}"><link rel="stylesheet" href="{% static 'css/admin.css' %}">{% endblock %}
+
+{% block content %}
+<div class="app-shell">
+  {% include "components/admin_sidebar.html" with active="notifications" %}
+  <main class="main-content" id="main-content">
+    <div class="topbar">
+      <button class="topbar__menu" id="sidebarToggle" aria-label="Open menu"><i class="bi bi-list"></i></button>
+      <div class="topbar__greeting"><h1>Notifications</h1><p class="muted">Broadcast and system notifications.</p></div>
+      <div class="topbar__actions"><button class="btn btn-dark btn-sm" id="newBroadcastBtn"><i class="bi bi-plus-lg"></i> New Broadcast</button></div>
+    </div>
+    <section class="card">
+      <ul class="notif-list" style="max-height:none;">
+        {% for n in broadcasts %}
+        <li class="notif-item {% if not n.is_read %}unread{% endif %}"><i class="bi {{ n.icon }} notif-icon {{ n.icon_tone }}"></i><div><p>{{ n.text }}</p><span class="muted">Broadcast · {{ n.created_at|timesince }} ago</span></div></li>
+        {% empty %}
+        <li class="notif-item"><i class="bi bi-bell-fill notif-icon lime"></i><div><p>No broadcasts sent yet.</p></div></li>
+        {% endfor %}
+      </ul>
+    </section>
+  </main>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/admin.js' %}"></script>{% endblock %}

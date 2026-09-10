@@ -1,0 +1,20 @@
+{% load static %}
+{# Include with: {% include "components/admin_sidebar.html" with active="dashboard" %} #}
+<aside class="sidebar admin-sidebar">
+  <a href="/admin-panel/" class="brand sidebar__brand">
+    <span class="brand__mark"><i class="bi bi-lightning-charge-fill"></i></span>
+    <span class="brand__name">FitAI <span class="mono" style="font-size:11px;color:var(--lime);">ADMIN</span></span>
+  </a>
+  <nav class="sidebar__nav" aria-label="Admin">
+    <a href="/admin-panel/" class="{% if active == 'dashboard' %}is-active{% endif %}"><i class="bi bi-grid-1x2-fill"></i><span>Dashboard</span></a>
+    <a href="/admin-panel/users/" class="{% if active == 'users' %}is-active{% endif %}"><i class="bi bi-people-fill"></i><span>Users</span></a>
+    <a href="/admin-panel/workouts/" class="{% if active == 'workouts' %}is-active{% endif %}"><i class="bi bi-calendar2-week-fill"></i><span>Workout Plans</span></a>
+    <a href="/admin-panel/exercises/" class="{% if active == 'exercises' %}is-active{% endif %}"><i class="bi bi-dumbbell"></i><span>Exercises</span></a>
+    <a href="/admin-panel/diet-plans/" class="{% if active == 'diet' %}is-active{% endif %}"><i class="bi bi-egg-fried"></i><span>Diet Plans</span></a>
+    <a href="/admin-panel/progress/" class="{% if active == 'progress' %}is-active{% endif %}"><i class="bi bi-graph-up-arrow"></i><span>Progress</span></a>
+    <a href="/admin-panel/ai-activity/" class="{% if active == 'ai' %}is-active{% endif %}"><i class="bi bi-stars"></i><span>AI Activity</span></a>
+    <a href="/admin-panel/notifications/" class="{% if active == 'notifications' %}is-active{% endif %}"><i class="bi bi-bell-fill"></i><span>Notifications</span></a>
+    <a href="/admin-panel/settings/" class="{% if active == 'settings' %}is-active{% endif %}"><i class="bi bi-gear-fill"></i><span>Settings</span></a>
+  </nav>
+  <a href="/admin-panel/logout/" class="sidebar__logout"><i class="bi bi-box-arrow-left"></i><span>Logout</span></a>
+</aside>

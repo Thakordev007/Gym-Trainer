@@ -1,0 +1,8 @@
+{# Include with: {% include "components/stat_card.html" with icon="bi-speedometer2" label="Current Weight" value="70" unit="kg" tone="lime" %} #}
+<div class="stat-card">
+  <div class="stat-card__icon tone-{{ tone|default:'lime' }}"><i class="bi {{ icon }}"></i></div>
+  <div class="stat-card__body">
+    <span class="stat-card__label">{{ label }}</span>
+    <span class="stat-card__value">{{ value }}<small>{{ unit }}</small></span>
+  </div>
+</div>

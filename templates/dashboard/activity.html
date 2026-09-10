@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Activity — FitAI{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">{% endblock %}
+
+{% block content %}
+<div class="app-shell">
+  {% include "components/sidebar.html" with active="activity" %}
+  <main class="main-content" id="main-content">
+    <div class="topbar">
+      <button class="topbar__menu" id="sidebarToggle" aria-label="Open menu"><i class="bi bi-list"></i></button>
+      <div class="topbar__greeting"><h1>Activity</h1><p class="muted">Everything you've logged, in one timeline.</p></div>
+    </div>
+
+    <div class="filter-row" role="tablist" aria-label="Activity filters">
+      <button class="filter-chip is-active" data-filter="all">All</button>
+      <button class="filter-chip" data-filter="workout">Workout</button>
+      <button class="filter-chip" data-filter="diet">Diet</button>
+      <button class="filter-chip" data-filter="progress">Progress</button>
+      <button class="filter-chip" data-filter="achievement">Achievement</button>
+    </div>
+
+    <section class="card card-pad">
+      <div class="timeline" id="activityTimeline">
+        {% for label, items in grouped_activity.items %}
+        <div class="timeline-group">
+          <h3>{{ label }}</h3>
+          {% for log in items %}
+          <div class="timeline-item" data-type="{{ log.type }}"><i class="bi {{ log.icon }} {{ log.icon_tone }}"></i> {{ log.text }}</div>
+          {% endfor %}
+        </div>
+        {% empty %}
+        <p class="muted">Nothing logged yet — complete a workout or update your progress to see it here.</p>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="section-head" style="margin:26px 0 14px;"><h2>Achievements</h2></section>
+    <div class="achievement-grid">
+      {% for a in achievement_cards %}
+      <div class="achievement-card {% if a.unlocked %}is-unlocked{% else %}is-locked{% endif %}">
+        <span class="achievement-card__icon">{{ a.icon }}</span><strong>{{ a.title }}</strong>
+        <span class="muted">{% if a.unlocked %}Unlocked{% else %}<i class="bi bi-lock-fill"></i> Locked{% endif %}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </main>
+</div>
+{% include "components/mobile_nav.html" %}
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/dashboard.js' %}"></script>{% endblock %}

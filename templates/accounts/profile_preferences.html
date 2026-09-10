@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Update Fitness Preferences — FitAI{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">{% endblock %}
+
+{% block content %}
+<div class="app-shell">
+  {% include "components/sidebar.html" with active="profile" %}
+  <main class="main-content" id="main-content">
+    <div class="topbar">
+      <button class="topbar__menu" id="sidebarToggle" aria-label="Open menu"><i class="bi bi-list"></i></button>
+      <div class="topbar__greeting">
+        <a href="/dashboard/profile/" class="back-link"><i class="bi bi-arrow-left"></i> Profile</a>
+        <h1>Update Fitness Preferences</h1>
+      </div>
+    </div>
+
+    <section class="card card-pad">
+      <form id="preferencesForm" novalidate>
+        <div class="two-col">
+          <div class="field">
+            <label for="weight">Current Weight (kg)</label>
+            <input class="input" type="number" step="0.1" id="weight" name="weight" value="{{ profile.weight_kg|default:'' }}" required>
+          </div>
+          <div class="field">
+            <label for="targetWeight">Target Weight (kg)</label>
+            <input class="input" type="number" step="0.1" id="targetWeight" name="targetWeight" value="{{ profile.target_weight_kg|default:'' }}" required>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="field">
+            <label for="goal">Fitness Goal</label>
+            <select class="input" id="goal" name="goal" required>
+              {% for value, label in goal_choices %}
+              <option value="{{ value }}" {% if profile.goal == value %}selected{% endif %}>{{ label }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="field">
+            <label for="fitnessLevel">Fitness Level</label>
+            <select class="input" id="fitnessLevel" name="fitnessLevel" required>
+              {% for value, label in fitness_level_choices %}
+              <option value="{{ value }}" {% if profile.fitness_level == value %}selected{% endif %}>{{ label }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="field">
+            <label for="workoutDays">Workout Days / Week</label>
+            <input class="input" type="number" min="1" max="7" id="workoutDays" name="workoutDays" value="{{ profile.workout_days }}" required>
+          </div>
+          <div class="field">
+            <label for="workoutLocation">Location</label>
+            <select class="input" id="workoutLocation" name="workoutLocation" required>
+              {% for value, label in location_choices %}
+              <option value="{{ value }}" {% if profile.workout_location == value %}selected{% endif %}>{{ label }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-dark">Save Changes</button>
+      </form>
+    </section>
+  </main>
+</div>
+{% include "components/mobile_nav.html" %}
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/auth.js' %}"></script>{% endblock %}

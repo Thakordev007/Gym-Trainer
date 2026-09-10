@@ -1,0 +1,20 @@
+{% load static %}
+{# Include with: {% include "components/sidebar.html" with active="dashboard" %} #}
+<aside class="sidebar" id="sidebar">
+  <a href="/dashboard/" class="brand sidebar__brand">
+    <span class="brand__mark"><i class="bi bi-lightning-charge-fill"></i></span>
+    <span class="brand__name">FitAI</span>
+  </a>
+
+  <nav class="sidebar__nav" aria-label="Dashboard">
+    <a href="/dashboard/" class="{% if active == 'dashboard' %}is-active{% endif %}"><i class="bi bi-grid-1x2-fill"></i><span>Dashboard</span></a>
+    <a href="/dashboard/workout-plan/" class="{% if active == 'workout' %}is-active{% endif %}"><i class="bi bi-calendar2-week-fill"></i><span>Workout Plan</span></a>
+    <a href="/dashboard/diet-plan/" class="{% if active == 'diet' %}is-active{% endif %}"><i class="bi bi-egg-fried"></i><span>Diet Plan</span></a>
+    <a href="/dashboard/progress/" class="{% if active == 'progress' %}is-active{% endif %}"><i class="bi bi-graph-up-arrow"></i><span>Progress</span></a>
+    <a href="/dashboard/activity/" class="{% if active == 'activity' %}is-active{% endif %}"><i class="bi bi-list-check"></i><span>Activity</span></a>
+    <a href="/ai-assistant/" class="{% if active == 'ai' %}is-active{% endif %}"><i class="bi bi-stars"></i><span>AI Assistant</span></a>
+    <a href="/dashboard/profile/" class="{% if active == 'profile' %}is-active{% endif %}"><i class="bi bi-person-fill"></i><span>Profile</span></a>
+  </nav>
+
+  <a href="/logout/" class="sidebar__logout"><i class="bi bi-box-arrow-left"></i><span>Logout</span></a>
+</aside>

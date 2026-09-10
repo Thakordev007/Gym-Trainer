@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}AI Activity — FitAI Admin{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/dashboard.css' %}"><link rel="stylesheet" href="{% static 'css/admin.css' %}">{% endblock %}
+
+{% block content %}
+<div class="app-shell">
+  {% include "components/admin_sidebar.html" with active="ai" %}
+  <main class="main-content" id="main-content">
+    <div class="topbar">
+      <button class="topbar__menu" id="sidebarToggle" aria-label="Open menu"><i class="bi bi-list"></i></button>
+      <div class="topbar__greeting"><h1>AI Activity</h1><p class="muted">Requests handled by the FitAI Assistant across all users.</p></div>
+    </div>
+
+    <div class="stat-grid stat-grid--3">
+      {% include "components/stat_card.html" with icon="bi-stars" label="Total Requests" value=total_requests unit="" tone="violet" %}
+      {% include "components/stat_card.html" with icon="bi-lightning-charge-fill" label="AI Assistant" value="Rule-based" unit="" tone="lime" %}
+      {% include "components/stat_card.html" with icon="bi-graph-up" label="Requests Today" value=requests_today unit="" tone="amber" %}
+    </div>
+
+    <section class="card">
+      <div class="table-wrap">
+        <table class="admin-table">
+          <thead><tr><th>User</th><th>Prompt</th><th>Category</th><th>Time</th></tr></thead>
+          <tbody>
+            {% for msg in recent %}
+            <tr>
+              <td data-label="User">{{ msg.user.get_full_name|default:msg.user.username }}</td>
+              <td data-label="Prompt">"{{ msg.text|truncatechars:60 }}"</td>
+              <td data-label="Category"><span class="pill pill-violet">{{ msg.category|default:"General"|title }}</span></td>
+              <td data-label="Time">{{ msg.created_at|timesince }} ago</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4" class="muted" style="text-align:center;padding:24px;">No AI requests yet.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/admin.js' %}"></script>{% endblock %}

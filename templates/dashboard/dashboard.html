@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Dashboard — FitAI{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">{% endblock %}
+
+{% block content %}
+<div class="app-shell">
+  {% include "components/sidebar.html" with active="dashboard" %}
+
+  <main class="main-content" id="main-content">
+    <div class="topbar">
+      <button class="topbar__menu" id="sidebarToggle" aria-label="Open menu"><i class="bi bi-list"></i></button>
+      <div class="topbar__greeting">
+        <h1>Good Morning, {{ greeting_name }} 👋</h1>
+        <p class="muted">Let's make today stronger than yesterday. <span class="mono" id="todayDate"></span></p>
+      </div>
+      <div class="topbar__actions">
+        <a href="/ai-assistant/" class="btn btn-violet btn-sm"><i class="bi bi-stars"></i> Ask AI</a>
+        <button class="icon-btn" id="notifBtn" aria-haspopup="true" aria-expanded="false" aria-label="Notifications">
+          <i class="bi bi-bell"></i>{% if unread_notifications_count %}<span class="badge-dot"></span>{% endif %}
+        </button>
+        {% include "components/notification.html" %}
+        <a href="/dashboard/profile/" class="avatar">{{ profile.initial }}</a>
+      </div>
+    </div>
+
+    <!-- Fitness statistics -->
+    <div class="stat-grid" id="statGrid">
+      {% include "components/stat_card.html" with icon="bi-speedometer2" label="Current Weight" value=profile.weight_kg|default:"—" unit="kg" tone="lime" %}
+      {% include "components/stat_card.html" with icon="bi-flag-fill" label="Target Weight" value=profile.target_weight_kg|default:"—" unit="kg" tone="violet" %}
+      {% include "components/stat_card.html" with icon="bi-check2-circle" label="Workouts Done" value=workouts_done unit="" tone="lime" %}
+      {% include "components/stat_card.html" with icon="bi-calendar-check" label="Weekly Goal" value=weekly_progress_label unit="" tone="violet" %}
+      {% include "components/stat_card.html" with icon="bi-fire" label="Calories" value=calories_today unit="kcal" tone="amber" %}
+      {% include "components/stat_card.html" with icon="bi-lightning-charge-fill" label="Streak" value=streak unit="days 🔥" tone="red" %}
+    </div>
+
+    <div class="dash-grid">
+      <!-- Today's workout -->
+      <section class="card card-pad">
+        <div class="section-head">
+          <h2>Today's Workout</h2>
+          <a href="/dashboard/workout-plan/" class="muted" style="font-size:13px;font-weight:600;">View weekly plan</a>
+        </div>
+        {% if today_workout and not today_workout.is_rest %}
+        <div class="today-workout-head">
+          <div>
+            <h3>{{ today_workout.title }}</h3>
+            <span class="muted"><i class="bi bi-clock"></i> {{ today_duration }} min · {{ today_exercises|length }} exercises</span>
+          </div>
+          <a href="/dashboard/workout-session/?day={{ today_workout.day }}" class="btn btn-primary">Start Workout</a>
+        </div>
+
+        {% for ex in today_exercises %}
+        {% include "components/exercise_card.html" with id=ex.id name=ex.name sets=ex.sets reps=ex.reps rest=ex.rest duration=ex.duration done=ex.done %}
+        {% empty %}
+        <p class="muted">No exercises scheduled — check your weekly plan.</p>
+        {% endfor %}
+        {% else %}
+        <div class="today-workout-head">
+          <div>
+            <h3>Rest Day</h3>
+            <span class="muted"><i class="bi bi-moon-stars-fill"></i> Recovery — light mobility or a walk is plenty</span>
+          </div>
+          <a href="/dashboard/workout-plan/" class="btn btn-outline">View weekly plan</a>
+        </div>
+        {% endif %}
+      </section>
+
+      <div class="dash-side">
+        <!-- Progress ring -->
+        <section class="card card-pad">
+          <h2>Progress</h2>
+          <div class="progress-summary">
+            <span class="ring" style="--val:{{ ring_pct }}"><span>{{ ring_pct }}%</span></span>
+            <div>
+              {% if weight_to_go %}
+              <p><strong>{{ weight_to_go }} kg</strong> to go until target weight</p>
+              {% else %}
+              <p>Set a target weight in your profile to track progress here.</p>
+              {% endif %}
+              <a href="/dashboard/progress/" class="muted" style="font-size:13px;font-weight:600;">See full progress →</a>
+            </div>
+          </div>
+        </section>
+
+        <!-- Weekly schedule -->
+        <section class="card card-pad">
+          <div class="section-head">
+            <h2>Weekly Schedule</h2>
+          </div>
+          <ul class="mini-schedule">
+            {% for item in mini_schedule %}
+            <li class="{{ item.state }}"><span>{{ item.short }}</span> {{ item.title }}
+              {% if item.state == 'is-done' %}<i class="bi bi-check-circle-fill"></i>
+              {% elif item.state == 'is-today' %}<i class="bi bi-play-circle-fill"></i>
+              {% elif item.is_rest %}<i class="bi bi-moon-stars-fill"></i>
+              {% else %}<i class="bi bi-clock"></i>{% endif %}
+            </li>
+            {% empty %}
+            <li><span>—</span> No plan yet</li>
+            {% endfor %}
+          </ul>
+        </section>
+
+        <!-- AI assistant teaser -->
+        <section class="card card-pad ai-teaser">
+          <i class="bi bi-stars"></i>
+          <p>{{ ai_tip }}</p>
+          <a href="/ai-assistant/" class="btn btn-dark btn-sm btn-block">Open AI Assistant</a>
+        </section>
+      </div>
+    </div>
+  </main>
+</div>
+{% include "components/mobile_nav.html" %}
+{% endblock %}
+
+{% block extra_js %}<script src="{% static 'js/dashboard.js' %}"></script>{% endblock %}

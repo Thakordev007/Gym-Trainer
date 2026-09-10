@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ day_label }} — {{ workout_day.title|default:"Rest Day" }} — FitAI{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">{% endblock %}
+
+{% block content %}
+<div class="app-shell">
+  {% include "components/sidebar.html" with active="workout" %}
+  <main class="main-content" id="main-content">
+    <div class="topbar">
+      <button class="topbar__menu" id="sidebarToggle" aria-label="Open menu"><i class="bi bi-list"></i></button>
+      <div class="topbar__greeting">
+        <a href="/dashboard/workout-plan/" class="back-link"><i class="bi bi-arrow-left"></i> Weekly plan</a>
+        <h1>{{ day_label }} · {{ workout_day.title|default:"Rest Day" }}</h1>
+      </div>
+      <div class="topbar__actions">
+        {% if workout_day and not workout_day.is_rest %}
+        <a href="/dashboard/workout-session/?day={{ day }}" class="btn btn-primary btn-sm">Start Session</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="stat-grid stat-grid--3">
+      {% include "components/stat_card.html" with icon="bi-clock" label="Duration" value=duration unit="min" tone="violet" %}
+      {% include "components/stat_card.html" with icon="bi-fire" label="Calories" value=calories unit="kcal" tone="amber" %}
+      {% include "components/stat_card.html" with icon="bi-layers" label="Exercises" value=exercise_count unit="total" tone="lime" %}
+    </div>
+
+    <section class="card card-pad">
+      <div class="section-head"><h2>Exercises</h2></div>
+
+      {% for ex in exercises %}
+      <div class="detail-exercise" data-id="{{ ex.id }}">
+        <div class="detail-exercise__head">
+          <h3>{{ ex.name }}</h3>
+          <button class="btn btn-outline btn-sm detail-exercise__complete" type="button" data-done="{{ ex.done|yesno:'true,false' }}">
+            <i class="bi bi-check2"></i> {% if ex.done %}Completed{% else %}Mark Complete{% endif %}
+          </button>
+        </div>
+        <div class="detail-exercise__grid">
+          <div><span>Sets</span><strong>{{ ex.sets }}</strong></div>
+          <div><span>Reps</span><strong>{{ ex.reps }}</strong></div>
+          <div><span>Rest</span><strong>{{ ex.rest }}</strong></div>
+          <div><span>Weight</span><strong class="detail-exercise__weight">{{ ex.weight }} kg</strong></div>
+        </div>
+        <div class="detail-exercise__controls">
+          <button class="btn btn-ghost btn-sm detail-exercise__add-weight" type="button"><i class="bi bi-plus-lg"></i> Add Weight</button>
+          <button class="btn btn-ghost btn-sm detail-exercise__add-reps" type="button"><i class="bi bi-plus-lg"></i> Add Reps</button>
+          <button class="btn btn-ghost btn-sm detail-exercise__add-notes" type="button"><i class="bi bi-pencil"></i> Add Notes</button>
+        </div>
+      </div>
+      {% empty %}
+      <p class="muted">{% if workout_day.is_rest %}Rest day — no exercises scheduled.{% else %}No exercises found for this day.{% endif %}</p>
+      {% endfor %}
+    </section>
+  </main>
+</div>
+{% include "components/mobile_nav.html" %}
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/workout.js' %}"></script>{% endblock %}

@@ -1,0 +1,16 @@
+{# Include with: {% include "components/exercise_card.html" with name="Bench Press" sets="4" reps="10" rest="90 sec" duration="8 min" done=False %} #}
+<div class="exercise-card {% if done %}is-done{% endif %}" data-exercise data-id="{{ id|default:'' }}">
+  <button class="exercise-card__check" type="button" aria-pressed="{{ done|yesno:'true,false' }}" aria-label="Mark {{ name }} complete">
+    <i class="bi {% if done %}bi-check-circle-fill{% else %}bi-circle{% endif %}"></i>
+  </button>
+  <div class="exercise-card__body">
+    <h4>{{ name }}</h4>
+    <div class="exercise-card__meta">
+      <span><i class="bi bi-layers"></i> {{ sets }} sets</span>
+      <span><i class="bi bi-arrow-repeat"></i> {{ reps }} reps</span>
+      <span><i class="bi bi-stopwatch"></i> {{ rest }} rest</span>
+      <span><i class="bi bi-clock-history"></i> {{ duration }}</span>
+    </div>
+  </div>
+  <button class="btn btn-outline btn-sm exercise-card__log" type="button">Log</button>
+</div>

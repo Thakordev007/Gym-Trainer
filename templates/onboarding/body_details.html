@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Body Details — FitAI{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/onboarding.css' %}">{% endblock %}
+
+{% block content %}
+<main id="main-content" class="onboarding-page">
+  <header class="onboarding-header">
+    <a href="/" class="brand"><span class="brand__mark"><i class="bi bi-lightning-charge-fill"></i></span><span class="brand__name">FitAI</span></a>
+    <a href="/dashboard/" class="muted skip-onboarding">Skip for now</a>
+  </header>
+
+  <div class="wizard">
+    <ol class="wizard__steps" aria-label="Onboarding progress">
+      <li class="is-done"><span><i class="bi bi-check-lg"></i></span>Goal</li>
+      <li class="is-active"><span>2</span>Body Details</li>
+      <li><span>3</span>Preferences</li>
+      <li><span>4</span>Equipment</li>
+      <li><span>5</span>Summary</li>
+    </ol>
+    <div class="progress-bar" style="margin-top:14px;"><span style="width:40%"></span></div>
+
+    <div class="wizard__panel">
+      <span class="eyebrow">STEP 2 OF 5</span>
+      <h1>Tell us about your body</h1>
+      <p class="muted">This helps FitAI calibrate volume, calories and recovery time.</p>
+
+      <form id="bodyDetailsForm" novalidate>
+        <div class="two-col">
+          <div class="field">
+            <label for="age">Age</label>
+            <input class="input" type="number" id="age" name="age" min="13" max="90" required>
+          </div>
+          <div class="field">
+            <label for="gender">Gender</label>
+            <select class="input" id="gender" name="gender" required>
+              <option value="" disabled selected>Select</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Height</label>
+          <div class="unit-input">
+            <input class="input" type="number" id="height" name="height" placeholder="175" required>
+            <div class="unit-toggle" data-unit-group="height">
+              <button type="button" class="is-active" data-unit="cm">cm</button>
+              <button type="button" data-unit="ft/in">ft/in</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="field">
+            <label>Current Weight</label>
+            <div class="unit-input">
+              <input class="input" type="number" id="weight" name="weight" placeholder="70" required>
+              <div class="unit-toggle" data-unit-group="weight">
+                <button type="button" class="is-active" data-unit="kg">kg</button>
+                <button type="button" data-unit="lbs">lbs</button>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <label>Target Weight</label>
+            <div class="unit-input">
+              <input class="input" type="number" id="targetWeight" name="targetWeight" placeholder="78" required>
+              <div class="unit-toggle" data-unit-group="targetWeight">
+                <button type="button" class="is-active" data-unit="kg">kg</button>
+                <button type="button" data-unit="lbs">lbs</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Fitness Level</label>
+          <div class="segmented" role="radiogroup" aria-label="Fitness level">
+            <button type="button" class="is-active" data-value="Beginner">Beginner</button>
+            <button type="button" data-value="Intermediate">Intermediate</button>
+            <button type="button" data-value="Advanced">Advanced</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="activityLevel">Activity Level</label>
+          <select class="input" id="activityLevel" name="activityLevel">
+            <option>Sedentary</option>
+            <option>Lightly Active</option>
+            <option selected>Moderately Active</option>
+            <option>Very Active</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="measurements">Body Measurements <span class="muted">(optional)</span></label>
+          <input class="input" type="text" id="measurements" name="measurements" placeholder="e.g. Chest 40in, Waist 32in">
+        </div>
+      </form>
+
+      <div class="wizard__nav">
+        <a href="/onboarding/goal/" class="btn btn-outline"><i class="bi bi-arrow-left"></i> Back</a>
+        <button type="button" class="btn btn-primary" id="bodyNextBtn">Continue <i class="bi bi-arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/onboarding.js' %}"></script>{% endblock %}

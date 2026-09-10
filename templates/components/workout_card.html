@@ -1,0 +1,11 @@
+{# Include with: {% include "components/workout_card.html" with day="MON" title="Chest + Triceps" status="today" url="/dashboard/workout-detail/monday/" %} #}
+<a href="{{ url|default:'#' }}" class="day-card day-card--{{ status }}">
+  <span class="day-card__day">{{ day }}</span>
+  <span class="day-card__title">{{ title }}</span>
+  <span class="day-card__status">
+    {% if status == 'completed' %}<i class="bi bi-check-circle-fill"></i> Completed
+    {% elif status == 'today' %}<i class="bi bi-play-circle-fill"></i> Today
+    {% elif status == 'rest' %}<i class="bi bi-moon-stars-fill"></i> Rest Day
+    {% else %}<i class="bi bi-clock"></i> Upcoming{% endif %}
+  </span>
+</a>

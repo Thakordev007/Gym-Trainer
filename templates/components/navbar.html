@@ -1,0 +1,91 @@
+{% load static %}
+
+<header class="site-header" id="site-header">
+
+    <div class="container site-header__inner">
+
+        <a href="/" class="brand" aria-label="FitAI home">
+            <span class="brand__mark">
+                <i class="bi bi-lightning-charge-fill"></i>
+            </span>
+
+            <span class="brand__name">
+                FitAI
+            </span>
+        </a>
+
+
+        <!-- Desktop Navigation -->
+
+        <nav class="main-nav" id="main-nav" aria-label="Primary">
+            <a href="/#home">Home</a>
+            <a href="/#features">Features</a>
+            <a href="/#how-it-works">How It Works</a>
+            <a href="/#about">About</a>
+        </nav>
+
+
+        <!-- Desktop Buttons -->
+
+        <div class="header-actions">
+
+            <a href="/admin-panel/login/" class="btn btn-ghost">
+                Admin Login
+            </a>
+
+            <a href="/login/" class="btn btn-ghost">
+                Login
+            </a>
+
+            <a href="/register/" class="btn btn-primary">
+                Get Started
+            </a>
+
+        </div>
+
+
+        <!-- Mobile Hamburger -->
+
+        <button class="hamburger" id="hamburgerBtn" type="button" aria-label="Open menu" aria-expanded="false"
+            aria-controls="mobileNav">
+            <i class="bi bi-list"></i>
+        </button>
+
+    </div>
+
+
+    <!-- Mobile Navigation -->
+
+    <div class="mobile-nav" id="mobileNav">
+
+        <a href="/#home">
+            Home
+        </a>
+
+        <a href="/#features">
+            Features
+        </a>
+
+        <a href="/#how-it-works">
+            How It Works
+        </a>
+
+        <a href="/#about">
+            About
+        </a>
+
+        <hr>
+        <a href="/admin-panel/login/" class="btn btn-outline btn-block">
+            Admin Login
+        </a>
+        <a href="/login/" class="btn btn-outline btn-block">
+            Login
+        </a>
+
+        <a href="/register/" class="btn btn-primary btn-block">
+            Get Started
+        </a>
+
+    </div>
+
+</header>

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}FitAI Assistant{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">{% endblock %}
+
+{% block content %}
+<div class="app-shell">
+  {% include "components/sidebar.html" with active="ai" %}
+  <main class="main-content main-content--chat" id="main-content">
+    <div class="topbar">
+      <button class="topbar__menu" id="sidebarToggle" aria-label="Open menu"><i class="bi bi-list"></i></button>
+      <div class="topbar__greeting">
+        <h1><i class="bi bi-stars" style="color:var(--violet);"></i> FitAI Assistant</h1>
+        <p class="muted">Your personal AI fitness coach</p>
+      </div>
+    </div>
+
+    <div class="chat-shell">
+      <div class="chat-window" id="chatWindow">
+        {% for msg in history %}
+        <div class="chat-bubble chat-bubble--{{ msg.sender }}">{{ msg.text }}</div>
+        {% empty %}
+        <div class="chat-bubble chat-bubble--ai">
+          Hey {{ request.user.first_name|default:request.user.username }} 👋 I'm your FitAI coach. Ask me about today's workout, your diet, or anything about your plan.
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="quick-prompts" id="quickPrompts">
+        <button data-prompt="What should I eat today?">What should I eat today?</button>
+        <button data-prompt="Give me today's workout">Give me today's workout</button>
+        <button data-prompt="How can I improve my stamina?">How can I improve my stamina?</button>
+        <button data-prompt="Suggest a home workout">Suggest a home workout</button>
+        <button data-prompt="Why am I not losing weight?">Why am I not losing weight?</button>
+        <button data-prompt="Give me a recovery routine">Give me a recovery routine</button>
+      </div>
+
+      <form class="chat-input-bar" id="chatForm">
+        <button type="button" class="icon-btn" aria-label="Attach file"><i class="bi bi-paperclip"></i></button>
+        <input type="text" class="input" id="chatInput" placeholder="Ask your fitness coach..." autocomplete="off">
+        <button type="button" class="icon-btn" aria-label="Voice input"><i class="bi bi-mic"></i></button>
+        <button type="submit" class="btn btn-primary btn-icon" aria-label="Send message"><i class="bi bi-send-fill"></i></button>
+      </form>
+    </div>
+  </main>
+</div>
+{% include "components/mobile_nav.html" %}
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/ai-assistant.js' %}"></script>{% endblock %}

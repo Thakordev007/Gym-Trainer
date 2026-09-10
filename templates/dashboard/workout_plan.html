@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Weekly Workout Plan — FitAI{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">{% endblock %}
+
+{% block content %}
+<div class="app-shell">
+  {% include "components/sidebar.html" with active="workout" %}
+  <main class="main-content" id="main-content">
+    <div class="topbar">
+      <button class="topbar__menu" id="sidebarToggle" aria-label="Open menu"><i class="bi bi-list"></i></button>
+      <div class="topbar__greeting"><h1>Weekly Workout Plan</h1><p class="muted">Your {{ profile.workout_days }}-day split for this week.</p></div>
+      <div class="topbar__actions">
+        <a href="/ai-assistant/" class="btn btn-violet btn-sm"><i class="bi bi-stars"></i> Ask AI</a>
+        <a href="/dashboard/profile/" class="avatar">{{ profile.initial }}</a>
+      </div>
+    </div>
+
+    <section class="card card-pad">
+      <div class="day-grid">
+        {% for c in weekly_cards %}
+        {% include "components/workout_card.html" with day=c.day title=c.title status=c.status url=c.url %}
+        {% empty %}
+        <p class="muted">No plan yet — finish onboarding to generate one.</p>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="card card-pad" style="margin-top:20px;">
+      <div class="section-head"><h2>This Week at a Glance</h2></div>
+      <div class="stat-grid stat-grid--3">
+        {% include "components/stat_card.html" with icon="bi-check2-circle" label="Completed" value=completed unit=completed_unit tone="lime" %}
+        {% include "components/stat_card.html" with icon="bi-fire" label="Est. Calories" value=total_calories unit="kcal" tone="amber" %}
+        {% include "components/stat_card.html" with icon="bi-clock-history" label="Total Time" value=total_minutes unit="min" tone="violet" %}
+      </div>
+    </section>
+  </main>
+</div>
+{% include "components/mobile_nav.html" %}
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/dashboard.js' %}"></script>{% endblock %}

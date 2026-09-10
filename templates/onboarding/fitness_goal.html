@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Your Fitness Goal — FitAI{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/onboarding.css' %}">{% endblock %}
+
+{% block content %}
+<main id="main-content" class="onboarding-page">
+  <header class="onboarding-header">
+    <a href="/" class="brand"><span class="brand__mark"><i class="bi bi-lightning-charge-fill"></i></span><span class="brand__name">FitAI</span></a>
+    <a href="/dashboard/" class="muted skip-onboarding">Skip for now</a>
+  </header>
+
+  <div class="wizard">
+    <ol class="wizard__steps" aria-label="Onboarding progress">
+      <li class="is-active"><span>1</span>Goal</li>
+      <li><span>2</span>Body Details</li>
+      <li><span>3</span>Preferences</li>
+      <li><span>4</span>Equipment</li>
+      <li><span>5</span>Summary</li>
+    </ol>
+    <div class="progress-bar" style="margin-top:14px;"><span style="width:20%"></span></div>
+
+    <div class="wizard__panel">
+      <span class="eyebrow">STEP 1 OF 5</span>
+      <h1>What is your main fitness goal?</h1>
+      <p class="muted">Choose the one that matters most right now — you can always adjust this later.</p>
+
+      <div class="goal-grid" id="goalGrid" role="radiogroup" aria-label="Fitness goal">
+        <button type="button" class="goal-card" data-value="Weight Loss" role="radio" aria-checked="false">
+          <i class="bi bi-fire"></i><span>Weight Loss</span>
+        </button>
+        <button type="button" class="goal-card" data-value="Weight Gain" role="radio" aria-checked="false">
+          <i class="bi bi-graph-up"></i><span>Weight Gain</span>
+        </button>
+        <button type="button" class="goal-card" data-value="Muscle Building" role="radio" aria-checked="false">
+          <i class="bi bi-flexbox"></i><span>Muscle Building</span>
+        </button>
+        <button type="button" class="goal-card" data-value="Fat Loss" role="radio" aria-checked="false">
+          <i class="bi bi-droplet-half"></i><span>Fat Loss</span>
+        </button>
+        <button type="button" class="goal-card" data-value="Strength" role="radio" aria-checked="false">
+          <i class="bi bi-lightning-charge"></i><span>Strength</span>
+        </button>
+        <button type="button" class="goal-card" data-value="General Fitness" role="radio" aria-checked="false">
+          <i class="bi bi-heart-pulse"></i><span>General Fitness</span>
+        </button>
+        <button type="button" class="goal-card" data-value="Improve Stamina" role="radio" aria-checked="false">
+          <i class="bi bi-wind"></i><span>Improve Stamina</span>
+        </button>
+        <button type="button" class="goal-card" data-value="Maintain Weight" role="radio" aria-checked="false">
+          <i class="bi bi-arrow-left-right"></i><span>Maintain Weight</span>
+        </button>
+      </div>
+      <span class="field-error" id="goalError" role="alert"></span>
+
+      <div class="wizard__nav">
+        <span></span>
+        <button type="button" class="btn btn-primary" id="goalNextBtn">Continue <i class="bi bi-arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
+
+{% block extra_js %}<script src="{% static 'js/onboarding.js' %}"></script>{% endblock %}

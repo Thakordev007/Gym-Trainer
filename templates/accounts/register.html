@@ -1,0 +1,259 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Create Account — FitAI{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<main id="main-content" class="auth-page">
+
+    <div class="auth-form-wrap">
+
+        <div class="auth-form">
+
+            <div class="auth-logo">
+                <a href="/" class="brand">
+                    <span class="brand__mark">
+                        <i class="bi bi-lightning-charge-fill"></i>
+                    </span>
+
+                    <span class="brand__name">
+                        FitAI
+                    </span>
+                </a>
+            </div>
+
+
+            <h1>Create your account</h1>
+
+            <p class="muted">
+                Start building your personalized fitness plan.
+            </p>
+
+
+            <form id="registerForm" novalidate>
+
+                <div class="field">
+
+                    <label for="fullName">
+                        Full Name
+                    </label>
+
+                    <input
+                        class="input"
+                        type="text"
+                        id="fullName"
+                        name="fullName"
+                        autocomplete="name"
+                        required
+                    >
+                    <span class="field-error" id="fullNameError" role="alert"></span>
+
+                </div>
+
+
+                <div class="two-col">
+
+                    <div class="field">
+
+                        <label for="username">
+                            Username
+                        </label>
+
+                        <input
+                            class="input"
+                            type="text"
+                            id="username"
+                            name="username"
+                            autocomplete="username"
+                            required
+                        >
+                        <span class="field-error" id="usernameError" role="alert"></span>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="mobile">
+                            Mobile Number
+                        </label>
+
+                        <input
+                            class="input"
+                            type="tel"
+                            id="mobile"
+                            name="mobile"
+                            autocomplete="tel"
+                            required
+                        >
+                        <span class="field-error" id="mobileError" role="alert"></span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="email">
+                        Email
+                    </label>
+
+                    <input
+                        class="input"
+                        type="email"
+                        id="email"
+                        name="email"
+                        autocomplete="email"
+                        required
+                    >
+                    <span class="field-error" id="emailError" role="alert"></span>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <div class="input-group">
+
+                        <input
+                            class="input"
+                            type="password"
+                            id="password"
+                            name="password"
+                            autocomplete="new-password"
+                            required
+                            minlength="8"
+                        >
+
+                        <button
+                            type="button"
+                            class="toggle-visibility"
+                            data-toggle-for="password"
+                            aria-label="Show password"
+                        >
+                            <i class="bi bi-eye"></i>
+                        </button>
+
+                    </div>
+
+                    <span class="field-error" id="passwordError" role="alert"></span>
+
+
+                    <div
+                        class="password-strength"
+                        id="passwordStrength"
+                    >
+
+                        <div class="password-strength__bar">
+                            <span></span>
+                        </div>
+
+                        <span class="password-strength__label muted">
+                            Enter a password
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="confirmPassword">
+                        Confirm Password
+                    </label>
+
+                    <div class="input-group">
+
+                        <input
+                            class="input"
+                            type="password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            autocomplete="new-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="toggle-visibility"
+                            data-toggle-for="confirmPassword"
+                            aria-label="Show password"
+                        >
+                            <i class="bi bi-eye"></i>
+                        </button>
+
+                    </div>
+
+                    <span
+                        class="field-error"
+                        id="confirmPasswordError"
+                        role="alert"
+                    ></span>
+
+                </div>
+
+
+                <label
+                    class="checkbox-row terms-row"
+                >
+
+                    <input
+                        type="checkbox"
+                        id="agreeTerms"
+                        required
+                    >
+
+                    <span>
+                        I agree to the
+                        <a href="#">
+                            Terms & Conditions
+                        </a>
+                    </span>
+
+                </label>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-primary btn-block"
+                >
+                    Create Account
+                </button>
+
+            </form>
+
+
+            <p class="auth-switch">
+
+                Already have an account?
+
+                <a href="/login/">
+                    Login
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</main>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/auth.js' %}"></script>
+{% endblock %}
+

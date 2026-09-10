@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Profile — FitAI{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">{% endblock %}
+
+{% block content %}
+<div class="app-shell">
+  {% include "components/sidebar.html" with active="profile" %}
+  <main class="main-content" id="main-content">
+    <div class="topbar">
+      <button class="topbar__menu" id="sidebarToggle" aria-label="Open menu"><i class="bi bi-list"></i></button>
+      <div class="topbar__greeting"><h1>Profile</h1><p class="muted">Manage your account and fitness preferences.</p></div>
+    </div>
+
+    <section class="card card-pad profile-head">
+      <div class="avatar" style="width:64px;height:64px;font-size:22px;">{{ profile.initial }}</div>
+      <div>
+        <h2 style="margin-bottom:2px;">{{ request.user.get_full_name|default:request.user.username }}</h2>
+        <span class="muted">{{ request.user.email }}</span>
+      </div>
+      <a href="/dashboard/profile/edit/" class="btn btn-outline"><i class="bi bi-pencil"></i> Edit Profile</a>
+    </section>
+
+    <div class="profile-grid">
+      <section class="card card-pad">
+        <div class="section-head"><h2>Personal Information</h2></div>
+        <dl class="detail-list">
+          <div><dt>Full Name</dt><dd>{{ request.user.get_full_name|default:request.user.username }}</dd></div>
+          <div><dt>Email</dt><dd>{{ request.user.email }}</dd></div>
+          <div><dt>Mobile</dt><dd>{{ profile.mobile|default:"—" }}</dd></div>
+          <div><dt>Age</dt><dd>{{ profile.age|default:"—" }}</dd></div>
+          <div><dt>Gender</dt><dd>{{ profile.gender|default:"—" }}</dd></div>
+          <div><dt>Height</dt><dd>{{ profile.height_cm|default:"—" }} cm</dd></div>
+        </dl>
+      </section>
+
+      <section class="card card-pad">
+        <div class="section-head"><h2>Fitness Preferences</h2></div>
+        <dl class="detail-list">
+          <div><dt>Weight</dt><dd>{{ profile.weight_kg|default:"—" }} kg</dd></div>
+          <div><dt>Target Weight</dt><dd>{{ profile.target_weight_kg|default:"—" }} kg</dd></div>
+          <div><dt>Fitness Goal</dt><dd>{{ profile.goal|default:"—" }}</dd></div>
+          <div><dt>Fitness Level</dt><dd>{{ profile.fitness_level }}</dd></div>
+          <div><dt>Workout Days</dt><dd>{{ profile.workout_days }} days / week</dd></div>
+          <div><dt>Location</dt><dd>{{ profile.workout_location|default:"—" }}</dd></div>
+        </dl>
+        <a href="/dashboard/profile/preferences/" class="btn btn-outline btn-block" style="margin-top:14px;">Update Fitness Preferences</a>
+      </section>
+    </div>
+
+    <section class="card card-pad" style="margin-top:20px;">
+      <div class="section-head"><h2>Security</h2></div>
+      <a href="/dashboard/profile/change-password/" class="btn btn-outline"><i class="bi bi-shield-lock"></i> Change Password</a>
+    </section>
+  </main>
+</div>
+{% include "components/mobile_nav.html" %}
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/dashboard.js' %}"></script>{% endblock %}

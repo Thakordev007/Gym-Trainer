@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Settings — FitAI Admin{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/dashboard.css' %}"><link rel="stylesheet" href="{% static 'css/admin.css' %}">{% endblock %}
+
+{% block content %}
+<div class="app-shell">
+  {% include "components/admin_sidebar.html" with active="settings" %}
+  <main class="main-content" id="main-content">
+    <div class="topbar">
+      <button class="topbar__menu" id="sidebarToggle" aria-label="Open menu"><i class="bi bi-list"></i></button>
+      <div class="topbar__greeting"><h1>Settings</h1><p class="muted">Platform and account configuration.</p></div>
+    </div>
+
+    <section class="card card-pad">
+      <div class="section-head"><h2>Admin Account</h2></div>
+      <div class="two-col">
+        <div class="field"><label for="adminName">Name</label><input class="input" type="text" id="adminName" value="{{ request.user.get_full_name|default:request.user.username }}"></div>
+        <div class="field"><label for="adminEmail">Email</label><input class="input" type="email" id="adminEmail" value="{{ request.user.email }}"></div>
+      </div>
+      <button class="btn btn-dark" id="saveAccountBtn">Save Changes</button>
+    </section>
+
+    <section class="card card-pad" style="margin-top:20px;">
+      <div class="section-head"><h2>Platform Preferences</h2></div>
+      <label class="checkbox-row" style="margin-bottom:14px;"><input type="checkbox" id="allowRegistrations" {% if site_settings.allow_registrations %}checked{% endif %}><span>Allow new user registrations</span></label>
+      <label class="checkbox-row" style="margin-bottom:14px;"><input type="checkbox" id="aiAssistantEnabled" {% if site_settings.ai_assistant_enabled %}checked{% endif %}><span>Enable AI Assistant for all users</span></label>
+      <label class="checkbox-row"><input type="checkbox" id="maintenanceMode" {% if site_settings.maintenance_mode %}checked{% endif %}><span>Maintenance mode</span></label>
+    </section>
+  </main>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/admin.js' %}"></script>{% endblock %}

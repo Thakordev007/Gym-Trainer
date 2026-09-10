@@ -1,0 +1,152 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Login — FitAI{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<main id="main-content" class="auth-page">
+
+    <div class="auth-form-wrap">
+
+        <div class="auth-form">
+
+            <div class="auth-logo">
+                <a href="/" class="brand">
+                    <span class="brand__mark">
+                        <i class="bi bi-lightning-charge-fill"></i>
+                    </span>
+                    <span class="brand__name">FitAI</span>
+                </a>
+            </div>
+
+            <h1>Welcome back</h1>
+
+            <p class="muted">
+                Log in to continue your plan.
+            </p>
+
+            <form id="loginForm" novalidate>
+
+                <div class="field">
+                    <label for="loginId">
+                        Username or Email
+                    </label>
+
+                    <input
+                        class="input"
+                        type="text"
+                        id="loginId"
+                        name="loginId"
+                        autocomplete="username"
+                        required
+                    >
+                </div>
+
+
+                <div class="field">
+
+                    <label for="loginPassword">
+                        Password
+                    </label>
+
+                    <div class="input-group">
+
+                        <input
+                            class="input"
+                            type="password"
+                            id="loginPassword"
+                            name="loginPassword"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="toggle-visibility"
+                            data-toggle-for="loginPassword"
+                            aria-label="Show password"
+                        >
+                            <i class="bi bi-eye"></i>
+                        </button>
+
+                    </div>
+
+                    <span
+                        class="field-error"
+                        id="loginPasswordError"
+                        role="alert"
+                    ></span>
+
+                </div>
+
+                <div class="auth-row">
+
+                    <label class="checkbox-row">
+
+                        <input
+                            type="checkbox"
+                            id="rememberMe"
+                        >
+
+                        <span>
+                            Remember me
+                        </span>
+
+                    </label>
+
+                    <a
+                        href="/forgot-password/"
+                        class="forgot-link"
+                    >
+                        Forgot password?
+                    </a>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-primary btn-block"
+                >
+                    Login
+                </button>
+
+
+                <div class="auth-divider">
+                    <span>or</span>
+                </div>
+
+
+                <button
+                    type="button"
+                    class="btn btn-outline btn-block"
+                >
+                    <i class="bi bi-google"></i>
+                    Continue with Google
+                </button>
+
+            </form>
+
+
+            <p class="auth-switch">
+                Don't have an account?
+                <a href="/register/">Register</a>
+            </p>
+
+        </div>
+
+    </div>
+
+</main>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/auth.js' %}"></script>
+{% endblock %}

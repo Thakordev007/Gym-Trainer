@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Diet Plan — FitAI{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">{% endblock %}
+
+{% block content %}
+<div class="app-shell">
+  {% include "components/sidebar.html" with active="diet" %}
+  <main class="main-content" id="main-content">
+    <div class="topbar">
+      <button class="topbar__menu" id="sidebarToggle" aria-label="Open menu"><i class="bi bi-list"></i></button>
+      <div class="topbar__greeting"><h1>Diet Plan</h1><p class="muted">Tuned to your {{ profile.goal|default:"fitness" }} goal.</p></div>
+      <div class="topbar__actions"><a href="/ai-assistant/" class="btn btn-violet btn-sm"><i class="bi bi-stars"></i> Ask AI</a></div>
+    </div>
+
+    <section class="card card-pad">
+      <div class="section-head"><h2>Daily Nutrition</h2><span class="pill pill-lime">{{ target.calorie_target|default:"—" }} kcal target</span></div>
+      <div class="macro-grid">
+        <div class="macro-item">
+          <div class="macro-item__head"><span>Calories</span><strong>{{ target.calorie_target|default:"—" }} kcal</strong></div>
+          <div class="progress-bar"><span style="width:{{ calorie_pct }}%"></span></div>
+        </div>
+        <div class="macro-item">
+          <div class="macro-item__head"><span>Protein</span><strong>{{ target.protein_target|default:"—" }} g</strong></div>
+          <div class="progress-bar"><span style="width:{{ protein_pct }}%"></span></div>
+        </div>
+        <div class="macro-item">
+          <div class="macro-item__head"><span>Carbs</span><strong>{{ target.carbs_target|default:"—" }} g</strong></div>
+          <div class="progress-bar violet"><span style="width:{{ carbs_pct }}%"></span></div>
+        </div>
+        <div class="macro-item">
+          <div class="macro-item__head"><span>Fats</span><strong>{{ target.fat_target|default:"—" }} g</strong></div>
+          <div class="progress-bar violet"><span style="width:{{ fat_pct }}%"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-head" style="margin:26px 0 14px;"><h2>Today's Meals</h2></section>
+    <div class="meal-grid">
+      {% for meal in meals %}
+      <div class="card card-pad meal-card">
+        <div class="meal-card__head"><span class="pill">{{ meal.meal_type }}</span><strong>{{ meal.calories }} kcal</strong></div>
+        <ul class="meal-list">{% for item in meal.items %}<li>{{ item }}</li>{% endfor %}</ul>
+        <div class="meal-macros"><span>P {{ meal.protein_g }}g</span><span>C {{ meal.carbs_g }}g</span><span>F {{ meal.fat_g }}g</span></div>
+        <button class="btn btn-ghost btn-sm btn-block ask-ai-meal">Ask AI for a meal alternative</button>
+      </div>
+      {% empty %}
+      <p class="muted">No meal plan yet — finish onboarding to generate one.</p>
+      {% endfor %}
+    </div>
+  </main>
+</div>
+{% include "components/mobile_nav.html" %}
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/dashboard.js' %}"></script>{% endblock %}

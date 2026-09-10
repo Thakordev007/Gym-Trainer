@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ target_user.get_full_name|default:target_user.username }} — FitAI Admin{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/dashboard.css' %}"><link rel="stylesheet" href="{% static 'css/admin.css' %}">{% endblock %}
+
+{% block content %}
+<div class="app-shell">
+  {% include "components/admin_sidebar.html" with active="users" %}
+  <main class="main-content" id="main-content">
+    <div class="topbar">
+      <button class="topbar__menu" id="sidebarToggle" aria-label="Open menu"><i class="bi bi-list"></i></button>
+      <div class="topbar__greeting">
+        <a href="/admin-panel/users/" class="back-link"><i class="bi bi-arrow-left"></i> All users</a>
+        <h1>{{ target_user.get_full_name|default:target_user.username }}</h1>
+      </div>
+      <div class="topbar__actions">
+        <a href="/admin/auth/user/{{ target_user.id }}/change/" class="btn btn-outline btn-sm">Edit</a>
+        <button class="btn btn-outline btn-sm toggle-user-btn" data-id="{{ target_user.id }}" style="color:var(--red);border-color:#FFD3D3;">{% if target_user.is_active %}Disable{% else %}Enable{% endif %}</button>
+      </div>
+    </div>
+
+    <div class="stat-grid stat-grid--4">
+      {% include "components/stat_card.html" with icon="bi-speedometer2" label="Current Weight" value=profile.weight_kg|default:"—" unit="kg" tone="lime" %}
+      {% include "components/stat_card.html" with icon="bi-flag-fill" label="Target Weight" value=profile.target_weight_kg|default:"—" unit="kg" tone="violet" %}
+      {% include "components/stat_card.html" with icon="bi-check2-circle" label="Workouts Done" value=workouts_done unit="" tone="lime" %}
+      {% include "components/stat_card.html" with icon="bi-stars" label="AI Requests" value=ai_requests unit="" tone="violet" %}
+    </div>
+
+    <section class="card card-pad">
+      <div class="section-head"><h2>Profile Details</h2></div>
+      <dl class="detail-list">
+        <div><dt>Email</dt><dd>{{ target_user.email }}</dd></div>
+        <div><dt>Mobile</dt><dd>{{ profile.mobile|default:"—" }}</dd></div>
+        <div><dt>Goal</dt><dd>{{ profile.goal|default:"—" }}</dd></div>
+        <div><dt>Fitness Level</dt><dd>{{ profile.fitness_level }}</dd></div>
+        <div><dt>Workout Days</dt><dd>{{ profile.workout_days }} / week</dd></div>
+        <div><dt>Location</dt><dd>{{ profile.workout_location|default:"—" }}</dd></div>
+        <div><dt>Joined</dt><dd>{{ target_user.date_joined|date:"M Y" }}</dd></div>
+        <div><dt>Status</dt><dd>{% if target_user.is_active %}<span class="pill pill-green">Active</span>{% else %}<span class="pill pill-amber">Inactive</span>{% endif %}</dd></div>
+      </dl>
+    </section>
+  </main>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/admin.js' %}"></script>{% endblock %}

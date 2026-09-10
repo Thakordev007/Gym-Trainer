@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Workout Preferences — FitAI{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/onboarding.css' %}">{% endblock %}
+
+{% block content %}
+<main id="main-content" class="onboarding-page">
+  <header class="onboarding-header">
+    <a href="/" class="brand"><span class="brand__mark"><i class="bi bi-lightning-charge-fill"></i></span><span class="brand__name">FitAI</span></a>
+    <a href="/dashboard/" class="muted skip-onboarding">Skip for now</a>
+  </header>
+
+  <div class="wizard">
+    <ol class="wizard__steps" aria-label="Onboarding progress">
+      <li class="is-done"><span><i class="bi bi-check-lg"></i></span>Goal</li>
+      <li class="is-done"><span><i class="bi bi-check-lg"></i></span>Body Details</li>
+      <li class="is-active"><span>3</span>Preferences</li>
+      <li><span>4</span>Equipment</li>
+      <li><span>5</span>Summary</li>
+    </ol>
+    <div class="progress-bar" style="margin-top:14px;"><span style="width:60%"></span></div>
+
+    <div class="wizard__panel">
+      <span class="eyebrow">STEP 3 OF 5</span>
+      <h1>Your workout preferences</h1>
+      <p class="muted">This shapes your weekly split and session length.</p>
+
+      <div class="field">
+        <label>Where do you want to workout?</label>
+        <div class="choice-row" id="locationChoice" role="radiogroup" aria-label="Workout location">
+          <button type="button" data-value="Gym"><i class="bi bi-building"></i> Gym</button>
+          <button type="button" data-value="Home"><i class="bi bi-house-door"></i> Home</button>
+          <button type="button" data-value="Both"><i class="bi bi-arrow-left-right"></i> Both</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>How many days per week can you workout?</label>
+        <div class="choice-row choice-row--wrap" id="daysChoice" role="radiogroup" aria-label="Workout days per week">
+          <button type="button" data-value="2">2 days</button>
+          <button type="button" data-value="3">3 days</button>
+          <button type="button" data-value="4">4 days</button>
+          <button type="button" data-value="5">5 days</button>
+          <button type="button" data-value="6">6 days</button>
+          <button type="button" data-value="7">7 days</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Preferred workout duration</label>
+        <div class="choice-row choice-row--wrap" id="durationChoice" role="radiogroup" aria-label="Preferred duration">
+          <button type="button" data-value="20 min">20 min</button>
+          <button type="button" data-value="30 min">30 min</button>
+          <button type="button" data-value="45 min">45 min</button>
+          <button type="button" data-value="60 min">60 min</button>
+          <button type="button" data-value="90 min">90 min</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Preferred workout time</label>
+        <div class="choice-row choice-row--wrap" id="timeChoice" role="radiogroup" aria-label="Preferred workout time">
+          <button type="button" data-value="Morning"><i class="bi bi-sunrise"></i> Morning</button>
+          <button type="button" data-value="Afternoon"><i class="bi bi-sun"></i> Afternoon</button>
+          <button type="button" data-value="Evening"><i class="bi bi-moon"></i> Evening</button>
+          <button type="button" data-value="Flexible"><i class="bi bi-shuffle"></i> Flexible</button>
+        </div>
+      </div>
+      <span class="field-error" id="prefError" role="alert"></span>
+
+      <div class="wizard__nav">
+        <a href="/onboarding/body-details/" class="btn btn-outline"><i class="bi bi-arrow-left"></i> Back</a>
+        <button type="button" class="btn btn-primary" id="prefNextBtn">Continue <i class="bi bi-arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/onboarding.js' %}"></script>{% endblock %}

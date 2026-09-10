@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Active Workout — FitAI{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">{% endblock %}
+
+{% block content %}
+<main id="main-content" class="session-page">
+  <div class="session-shell" data-id="{{ current.id|default:'' }}" data-total-sets="{{ current.sets|default:0 }}" data-rest-seconds="{{ current.rest_seconds|default:45 }}">
+    <a href="{{ back_url }}" class="back-link"><i class="bi bi-x-lg"></i> End session</a>
+
+    <span class="pill pill-violet">Set {{ sets_done|add:1 }} of {{ current.sets|default:0 }}</span>
+    <h1>{{ current.exercise.name|default:"No exercise" }}</h1>
+
+    <div class="session-timer" id="sessionTimer">
+      <span id="timerDisplay">00:{{ current.rest_seconds|default:45|stringformat:"02d" }}</span>
+      <span class="muted">rest timer</span>
+    </div>
+
+    <div class="session-timer-controls">
+      <button class="btn btn-outline btn-icon" id="timerStartBtn" aria-label="Start timer"><i class="bi bi-play-fill"></i></button>
+      <button class="btn btn-outline btn-icon" id="timerPauseBtn" aria-label="Pause timer"><i class="bi bi-pause-fill"></i></button>
+      <button class="btn btn-outline btn-icon" id="timerResetBtn" aria-label="Reset timer"><i class="bi bi-arrow-clockwise"></i></button>
+    </div>
+
+    <div class="set-tracker" id="setTracker">
+      {% for i in set_range %}
+      <div class="set-pill {% if i < sets_done %}is-done{% elif i == sets_done %}is-current{% endif %}">
+        Set {{ i|add:1 }}{% if i < sets_done %} <i class="bi bi-check-lg"></i>{% endif %}
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="session-inputs">
+      <div class="field">
+        <label for="sessionWeight">Weight (kg)</label>
+        <input class="input" type="number" id="sessionWeight" value="{{ current.target_weight_kg|default:0 }}">
+      </div>
+      <div class="field">
+        <label for="sessionReps">Reps</label>
+        <input class="input" type="number" id="sessionReps" value="{{ current.reps|default:0 }}">
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-block" id="completeSetBtn">Complete Set</button>
+
+    <div class="session-success" id="sessionSuccess" hidden>
+      <i class="bi bi-check-circle-fill"></i> Set logged — nice work!
+    </div>
+  </div>
+</main>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/workout.js' %}"></script>{% endblock %}

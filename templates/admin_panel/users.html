@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Users — FitAI Admin{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/dashboard.css' %}"><link rel="stylesheet" href="{% static 'css/admin.css' %}">{% endblock %}
+
+{% block content %}
+<div class="app-shell">
+  {% include "components/admin_sidebar.html" with active="users" %}
+  <main class="main-content" id="main-content">
+    <div class="topbar">
+      <button class="topbar__menu" id="sidebarToggle" aria-label="Open menu"><i class="bi bi-list"></i></button>
+      <div class="topbar__greeting"><h1>Users</h1><p class="muted">{{ total_users }} total members.</p></div>
+      <div class="topbar__actions"><input class="input admin-search" type="search" id="userSearch" placeholder="Search users..." value="{{ query }}"></div>
+    </div>
+
+    <section class="card">
+      <div class="table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>User</th><th>Email</th><th>Goal</th><th>Weight</th><th>Fitness Level</th><th>Workout Days</th><th>Status</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for u in users %}
+            <tr data-user-row="{{ u.id }}">
+              <td data-label="User"><span class="table-user"><span class="avatar" style="width:32px;height:32px;font-size:12px;">{{ u.username|slice:":1"|upper }}</span> {{ u.get_full_name|default:u.username }}</span></td>
+              <td data-label="Email">{{ u.email }}</td>
+              <td data-label="Goal">{{ u.profile.goal|default:"—" }}</td>
+              <td data-label="Weight">{{ u.profile.weight_kg|default:"—" }} kg</td>
+              <td data-label="Fitness Level">{{ u.profile.fitness_level }}</td>
+              <td data-label="Workout Days">{{ u.profile.workout_days }} / week</td>
+              <td data-label="Status">{% if u.is_active %}<span class="pill pill-green">Active</span>{% else %}<span class="pill pill-amber">Inactive</span>{% endif %}</td>
+              <td data-label="Actions" class="table-actions">
+                <a href="/admin-panel/users/{{ u.id }}/" class="btn btn-ghost btn-sm">View</a>
+                <a href="/admin/auth/user/{{ u.id }}/change/" class="btn btn-ghost btn-sm">Edit</a>
+                <button class="btn btn-ghost btn-sm toggle-user-btn" data-id="{{ u.id }}" style="color:var(--red);">{% if u.is_active %}Disable{% else %}Enable{% endif %}</button>
+              </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="8" class="muted" style="text-align:center;padding:24px;">No users found.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/admin.js' %}"></script>{% endblock %}
